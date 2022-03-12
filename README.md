@@ -1,4 +1,4 @@
-# RDS Flask Example
+# AWS EC2, RDS and Secrets Manager - Flask Example
 
 A Flask web application with two APIs to Store and Retrieve student information for AWS RDS, where the database connection details are stored in AWS Secrets Manager. Furthermore, the app is deployed on an EC2 instance behind a Virtual Private Cloud (VPC) in the public subnet, whereas the AWS RDS is under the same VPC in a private subnet.
 

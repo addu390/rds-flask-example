@@ -1,12 +1,10 @@
 import os
-
-import flask
-from flask import Flask, request
+import json
+import boto3
 from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, jsonify
 from dotenv import load_dotenv, find_dotenv
 from sqlalchemy_utils import database_exists, create_database
-import boto3
-import json
 
 load_dotenv(find_dotenv())
 
@@ -89,7 +87,7 @@ def store():
 @app.route("/liststudents", methods=['GET'])
 def retrieve():
     students = Student.query.all()
-    return flask.jsonify([Student.serialize(user) for user in students])
+    return jsonify([Student.serialize(user) for user in students])
 
 
 if __name__ == "__main__":
