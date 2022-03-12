@@ -5,3 +5,5 @@ python-dotenv==0.19.2
 requests==2.27.1
 sqlalchemy-utils==0.38.2
 six==1.16.0
+boto3==1.21.18
+botocore==1.24.18

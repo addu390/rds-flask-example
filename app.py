@@ -4,6 +4,8 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 from sqlalchemy_utils import database_exists, create_database
+import boto3
+import json
 
 load_dotenv(find_dotenv())
 
@@ -11,8 +13,18 @@ app = Flask(__name__)
 database_url: str
 
 if os.environ['ENV'] == 'prod':
-    # Retrieve from AWS Secrets Manager
-    database_url = ""
+    session = boto3.Session(aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
+                            aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))
+
+    client = session.client(service_name='secretsmanager', region_name=os.getenv('AWS_REGION'))
+    response = client.get_secret_value(SecretId=os.getenv('SECRET_ID'))
+    database_secrets = json.loads(response['SecretString'])
+
+    database_url = 'mysql://{}:{}@{}/{}'.format(database_secrets['DB_USERNAME'],
+                                                database_secrets['DB_PASSWORD'],
+                                                database_secrets['DB_HOST'],
+                                                database_secrets['DB_NAME'])
+
 else:
     database_url = 'mysql://{}:{}@{}/{}'.format(os.getenv('DB_USERNAME'),
                                                 os.getenv('DB_PASSWORD'),
