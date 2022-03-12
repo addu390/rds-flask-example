@@ -1,5 +1,6 @@
 import os
 
+import flask
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
@@ -54,6 +55,13 @@ class Student(db.Model):
         self.last_name = last_name
         self.banner = banner
 
+    def serialize(self):
+        return {
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'banner': self.banner
+        }
+
 
 db.create_all()
 
@@ -76,6 +84,12 @@ def store():
 
     else:
         return {'error': "students array is empty"}, 400
+
+
+@app.route("/liststudents", methods=['GET'])
+def retrieve():
+    students = Student.query.all()
+    return flask.jsonify([Student.serialize(user) for user in students])
 
 
 if __name__ == "__main__":
