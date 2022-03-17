@@ -2,7 +2,7 @@ import os
 import json
 import boto3
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv, find_dotenv
 from sqlalchemy_utils import database_exists, create_database
 
@@ -87,7 +87,11 @@ def store():
 @app.route("/liststudents", methods=['GET'])
 def retrieve():
     students = Student.query.all()
-    return jsonify([Student.serialize(user) for user in students])
+    student_list = [Student.serialize(user) for user in students]
+    if request.headers.get("Content-Type") == 'application/json':
+        return jsonify(student_list)
+    else:
+        return render_template('student_list.html', data=student_list)
 
 
 if __name__ == "__main__":

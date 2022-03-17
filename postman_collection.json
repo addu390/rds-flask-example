@@ -6,10 +6,45 @@
 	},
 	"item": [
 		{
-			"name": "List Students",
+			"name": "List Students JSON",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/liststudents",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"liststudents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Students HTML",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
 					"raw": "http://127.0.0.1:5000/liststudents",
 					"protocol": "http",
@@ -34,7 +69,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"students\": [\n       {\n         \"first_name\": \"John\",\n         \"last_name\": \"Doe\",\n         \"banner\": \"B00885612\"\n        },\n        {\n         \"first_name\": \"Linda\",\n         \"last_name\": \"Gray\",\n         \"banner\": \"B00885613\"\n        }\n    ]\n}",
+					"raw": "{\n   \"students\": [\n       {\n         \"first_name\": \"Jessica\",\n         \"last_name\": \"Eulalia\",\n         \"banner\": \"B00885614\"\n        },\n        {\n         \"first_name\": \"Biljana\",\n         \"last_name\": \"Johannes\",\n         \"banner\": \"B00885615\"\n        },\n        {\n         \"first_name\": \"Emanuela\",\n         \"last_name\": \"Tindra\",\n         \"banner\": \"B00885616\"\n        },\n        {\n         \"first_name\": \"Oleksandr\",\n         \"last_name\": \"Frideswide\",\n         \"banner\": \"B00885617\"\n        },\n        {\n         \"first_name\": \"İbrahim\",\n         \"last_name\": \"Gunther\",\n         \"banner\": \"B00885618\"\n        },\n        {\n         \"first_name\": \"Istvan\",\n         \"last_name\": \"Rolando\",\n         \"banner\": \"B00885619\"\n        },\n        {\n         \"first_name\": \"Douglas\",\n         \"last_name\": \"Bihotz\",\n         \"banner\": \"B00885620\"\n        },\n        {\n         \"first_name\": \"Nadia\",\n         \"last_name\": \"Omri\",\n         \"banner\": \"B00885621\"\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
