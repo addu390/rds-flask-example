@@ -11,6 +11,8 @@ load_dotenv(find_dotenv())
 app = Flask(__name__)
 database_url: str
 
+MYSQL_FORMAT = 'mysql://{}:{}@{}/{}'
+
 if os.environ['ENV'] == 'prod':
     session = boto3.Session(aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
                             aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))
@@ -19,16 +21,16 @@ if os.environ['ENV'] == 'prod':
     response = client.get_secret_value(SecretId=os.getenv('SECRET_ID'))
     database_secrets = json.loads(response['SecretString'])
 
-    database_url = 'mysql://{}:{}@{}/{}'.format(database_secrets['DB_USERNAME'],
-                                                database_secrets['DB_PASSWORD'],
-                                                database_secrets['DB_HOST'],
-                                                database_secrets['DB_NAME'])
+    database_url = MYSQL_FORMAT.format(database_secrets['DB_USERNAME'],
+                                       database_secrets['DB_PASSWORD'],
+                                       database_secrets['DB_HOST'],
+                                       database_secrets['DB_NAME'])
 
 else:
-    database_url = 'mysql://{}:{}@{}/{}'.format(os.getenv('DB_USERNAME'),
-                                                os.getenv('DB_PASSWORD'),
-                                                os.getenv('DB_HOST'),
-                                                os.getenv('DB_NAME'))
+    database_url = MYSQL_FORMAT.format(os.getenv('DB_USERNAME'),
+                                       os.getenv('DB_PASSWORD'),
+                                       os.getenv('DB_HOST'),
+                                       os.getenv('DB_NAME'))
 
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -79,7 +81,6 @@ def store():
             return {'success': True}, 200
         except Exception as e:
             return {'error': str(e.orig)}, 400
-
     else:
         return {'error': "students array is empty"}, 400
 
