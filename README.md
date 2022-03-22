@@ -16,9 +16,9 @@ Tutorial: [Create an Amazon VPC for use with a DB instance](https://docs.aws.ama
 
 ## Quick Deployment (AWS EC2)
 
-- Create an EC2 instance (AWS Linux 2) and SSH into the machine: `ssh -i ec2-licensing-keypair.pem ec2-user@<ec2-public-ip-address>`
+- Create an EC2 instance (AWS Linux 2) and SSH into the machine: `ssh -i <aws-key-pair>.pem ec2-user@<ec2-public-ip-address>`
 - Install git: `sudo yum install git -y`
-- Clone the repository: `git clone https://github.com/addu390/s3-flask-example.git`
+- Clone the repository: `git clone https://github.com/addu390/rds-flask-example.git`
 
 **Note:** For development and testing purpose only
 
@@ -39,7 +39,10 @@ Tutorial: [Create an Amazon VPC for use with a DB instance](https://docs.aws.ama
 
 - Create Virtual Environment: `python3.9 -m venv env`
 - Activate: `source env/bin/activate`
-- Install Dependencies: `sudo python3 -m pip install -r requirements.txt`
+- Install Dependencies:
+  - `sudo yum install python3-devel`
+  - `sudo yum install -y mysql-devel`
+  - `sudo python3 -m pip install -r requirements.txt`
 
 ### Run the application
 
